@@ -1,0 +1,23 @@
+@startuml
+title Flux Zigbee → MQTT → Home Assistant (Horizontal)
+
+left to right direction
+
+skinparam rectangle {
+  BackgroundColor #F2F2F2
+  BorderColor #555
+  RoundCorner 10
+}
+
+rectangle "Appareil Zigbee" as Z
+rectangle "Coordinateur Zigbee" as C
+rectangle "Zigbee2MQTT" as Z2M
+rectangle "Broker MQTT" as M
+rectangle "Home Assistant" as HA
+
+Z --> C
+C --> Z2M
+Z2M --> M : via MQTT
+M --> HA
+
+@enduml

@@ -1,0 +1,54 @@
+@startuml
+title Réseau Maillé Zigbee (Disposition Maillée)
+
+skinparam rectangle {
+  BackgroundColor #F2F2F2
+  BorderColor #555555
+  RoundCorner 10
+}
+
+skinparam packageStyle rectangle
+
+' --- No automatic layout to avoid triangle shape ---
+
+
+' Routers placed around the coordinator
+circle "Router 1\n(Prise connectée)" as R1 #7ED321
+circle "Router 2\n(Ampoule Zigbee)" as R2 #7ED321
+circle "Router 3\n(Module encastré)" as R3 #7ED321
+circle "Router 4\n(Prise Zigbee)" as R4 #7ED321
+
+circle Coordinator as C #4A90E2
+
+' End devices around routers
+circle "Capteur Température" as E1 #F5A623
+circle "Détecteur Mouvement" as E2 #F5A623
+circle "Bouton sans fil" as E3 #F5A623
+circle "Capteur Ouverture" as E4 #F5A623
+circle "Capteur Humidité" as E5 #F5A623
+circle "Capteur Lumière" as E6 #F5A623
+
+' --- Links ---
+C <--> R1
+C <--> R2
+
+
+
+R1 <--> E1
+R1 <--> E2
+
+R2 <--> E3
+
+R3 <--> E4
+R3 <--> E5
+
+R4 <--> E6
+
+' Optional cross-links to show mesh
+R1 <--> R2
+R2 <--> R3
+
+R3 <--> R4
+
+
+@enduml
