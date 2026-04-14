@@ -1,5 +1,9 @@
 # 🌐 Comprendre Zigbee, son fonctionnement, et son intégration avec Home Assistant
 
+## 📺 Vidéo
+
+Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.com/@Baronnix/playlists)
+
 ## 📌 Qu’est‑ce que Zigbee ?
 Zigbee est un **protocole de communication sans fil basse consommation**, conçu pour les objets connectés (IoT).  
 Il est particulièrement utilisé dans la domotique pour connecter :

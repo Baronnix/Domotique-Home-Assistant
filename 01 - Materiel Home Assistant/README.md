@@ -1,6 +1,10 @@
-## 🏠 Installation du serveur Home Assistant
+# 🏠 Installation du serveur Home Assistant
 
 Ce document présente le matériel nécessaire pour installer et configurer un serveur Home Assistant autonome, ainsi qu’une galerie d’aperçu des composants.
+
+## 📺 Vidéo
+
+Lien Youtube: [https://www.youtube.com/watch?v=PQOpOTrsC44](https://www.youtube.com/watch?v=PQOpOTrsC44)
 
 ## 🔧 Matériel indispensable pour le serveur Home Assistant
 
