@@ -43,15 +43,17 @@ Plus de details voir l' episode 01 - Materiel Home Assistant:
 
 ## 3. ⚙️ Flasher la carte SD
 
-1. Ouvrir Raspberry Pi Imager
+1. Télécharger Raspberry PI Imager from [https://www.raspberrypi.com/software](https://www.raspberrypi.com/software)
 
-2. Cliquer sur Choose OS → Use custom
+2. Installer et ouvrir Raspberry Pi Imager
 
-3. Sélectionner l’image Home Assistant téléchargée
+3. Cliquer sur Choose OS → Use custom
 
-4. Cliquer sur Choose Storage et sélectionner la carte SD
+4. Sélectionner l’image Home Assistant téléchargée
 
-5. Cliquer sur Write
+5. Cliquer sur Choose Storage et sélectionner la carte SD
+
+6. Cliquer sur Write
 
 ## 4. 🚀 Premier démarrage
 
