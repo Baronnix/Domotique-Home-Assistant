@@ -1,10 +1,7 @@
-# 🏠 Installation d’un OS sur Raspberry Pi 4 + Home Assistant Supervised
+# 🏠 Installation de Home Assistant OS sur un Raspberry Pi 4
 
 Ce document présente les étapes pour installer et configurer un serveur Home Assistant autonome sur un raspberry pi 4.
-Ce guide explique comment :
- - Installer un système d’exploitation compatible sur un Raspberry Pi 4
- - Préparer l’environnement pour Home Assistant Supervised
- - Installer Home Assistant Supervised proprement
+Ce guide explique comment installer Home Assistant OS sur un Raspberry Pi 4.
 
 ## 📺 Vidéo
 
@@ -13,22 +10,17 @@ Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.
 ## Comparatif des méthodes d’installation de Home Assistant
 
 Home Assistant peut être installé de plusieurs façons, chacune ayant ses avantages et limites.
-Voici un tableau comparatif des 4 méthodes principales sur Raspberry Pi 4.
+Voici un tableau comparatif des méthodes principales sur Raspberry Pi 4.
 
- | Méthode | Supervisor | Add-ons | Maintenance | Liberté système | Support officiel | Difficulté | 
- | --- | --- | --- | --- | --- | --- | --- |
- | Home Assistant OS | ✔️ | ✔️ | Très faible | ❌ | ⭐⭐⭐⭐⭐ | ⭐ | 
- | Home Assistant Supervised | ✔️ | ✔️ | Moyenne | ✔️ (Debian uniquement) | ⭐⭐⭐⭐ | ⭐⭐⭐ | 
- | Home Assistant Container | ❌ | ❌ | Moyenne/Élevée | ✔️ | ⭐⭐⭐ | ⭐⭐⭐ | 
- | Home Assistant Core (Python) | ❌ | ❌ | Élevée | ✔️ | ⭐⭐ | ⭐⭐⭐⭐ | 
+ | Méthode | Supervisor | Add-ons | Maintenance | Liberté système | Support officiel | Difficulté | Support |
+ | --- | --- | --- | --- | --- | --- | --- | --- |
+ | Home Assistant OS | ✔️ | ✔️ | Très faible | ❌ | ⭐⭐⭐⭐⭐ | ⭐ | Support Complet |
+ | Home Assistant Supervised | ✔️ | ✔️ | Moyenne | ✔️ (Debian uniquement) | ⭐⭐⭐⭐ | ⭐⭐⭐ | Abandonné |
+ | Home Assistant Container | ❌ | ❌ | Moyenne/Élevée | ✔️ | ⭐⭐⭐ | ⭐⭐⭐ | Supporté |
 
-Nous allons installer "Home Assistant Supervised".
+Nous allons installer "Home Assistant OS" en suivant [ce tutoriel](https://www.home-assistant.io/installation/raspberrypi/)
 
-Cela permettra par la suite d'utiliser le Raspberry Pi pour d'autres projets tout en gardant home assistant intact, mais nous savons déjà que Debian 12 est en fin de vie, pour plus de détails cliquez [ici](https://www.debian.org/releases/bookworm/)
-
-Pour installer Home Assistant OS, vous pouvez suivre [ce tutoriel](https://www.home-assistant.io/installation/raspberrypi/)
-
-## 📦 1. Prérequis
+## 1. 📦 Prérequis
 
 Matériel
  - Raspberry Pi 4 (4 Go ou 8 Go recommandé)
@@ -41,6 +33,114 @@ Plus de details voir l' episode 01 - Materiel Home Assistant:
  - Lien Youtube: [https://www.youtube.com/watch?v=PQOpOTrsC44](https://www.youtube.com/watch?v=PQOpOTrsC44)
  - Lien GitHub: [https://github.com/Baronnix/Domotique-Home-Assistant/tree/main/01%20-%20Materiel%20Home%20Assistant](https://github.com/Baronnix/Domotique-Home-Assistant/tree/main/01%20-%20Materiel%20Home%20Assistant)
 
+## 2. 🧰 Télécharger l’image Home Assistant OS
+
+1. Aller sur : https://www.home-assistant.io/installation/raspberrypi
+
+2. Choisir ton modèle de Raspberry Pi
+
+3. Télécharger l’image .img.xz
+
+## 3. ⚙️ Flasher la carte SD
+
+1. Ouvrir Raspberry Pi Imager
+
+2. Cliquer sur Choose OS → Use custom
+
+3. Sélectionner l’image Home Assistant téléchargée
+
+4. Cliquer sur Choose Storage et sélectionner la carte SD
+
+5. Cliquer sur Write
+
+## 4. 🚀 Premier démarrage
+
+1. Insérer la carte SD dans le Raspberry Pi
+
+2. Brancher le câble réseau (recommandé pour la première installation)
+
+3. Alimenter le Raspberry
+
+4. Attendre 5 à 10 minutes pendant l’installation automatique
+
+## 5. 🌐 Accéder à Home Assistant
+
+Une fois le Raspberry démarré, ouvrir un navigateur et aller sur :
+* http://homeassistant.local:8123
+Si cela ne fonctionne pas, utiliser l’adresse IP du Raspberry :
+* http://<adresse-ip>:8123
+
+## 6. 🛠️ Configuration initiale
+
+1. Créer un compte administrateur
+
+2. Définir la localisation, le fuseau horaire et les unités
+
+3. Ajouter les premiers appareils (si détectés automatiquement)
+
+## 7. 📡 Activer le Wi‑Fi (optionnel)
+
+Si tu veux utiliser le Wi‑Fi au lieu du câble Ethernet :
+
+1. Insérer la carte SD dans ton ordinateur
+
+2. Dans la partition CONFIG, créer un fichier :
+    ``` 
+    network/my-network
+    ```
+3. Y mettre ce contenu (adapter SSID et mot de passe) :
+    ``` 
+    [connection]
+    id=my-network
+    uuid=12345678-1234-5678-1234-567812345678
+    type=wifi
+
+    [wifi]
+    mode=infrastructure
+    ssid="NomDuWiFi"
+
+    [wifi-security]
+    auth-alg=open
+    key-mgmt=wpa-psk
+    psk="MotDePasseWiFi"
+
+    [ipv4]
+    method=auto
+
+    [ipv6]
+    method=auto
+    ```
+4. Sauvegarder, éjecter la carte SD et redémarrer le Raspberry.
+
+## 8. 🔧 Mise à jour
+Dans Home Assistant :
+* Settings → System → Updates
+
+## 9. 📦 Add-ons utiles
+
+* File Editor : éditer les fichiers YAML
+* Samba Share : accéder aux fichiers depuis Windows
+* Mosquitto MQTT Broker : pour les appareils MQTT
+
+
+# 🏠 Installation d’un OS sur Raspberry Pi 4 + Home Assistant Supervised
+
+Cette section présente les étapes pour installer et configurer un serveur Home Assistant autonome sur un raspberry pi 4. Ce guide explique comment :
+* Installer un système d’exploitation compatible sur un Raspberry Pi 4
+* Préparer l’environnement pour Home Assistant Supervised
+* Installer Home Assistant Supervised proprement
+
+## ⚠️ 1. Notes importantes
+
+Home Assistant Supervised est sensible aux modifications système et n'est plus maintenu.
+
+Ce type d'installation permet d'utiliser le Raspberry Pi pour d'autres projets tout en gardant home assistant intact, mais nous savons déjà que Debian 12 est en fin de vie, pour plus de détails cliquez [ici](https://www.debian.org/releases/bookworm/).
+
+Éviter d’installer des services qui pourraient entrer en conflit (Docker Swarm, Kubernetes, etc.).
+
+Debian 12 est la seule distribution officiellement supportée pour Supervised.
+
+La procédure ci-dessous ne fera pas l'objet d'un tutoriel et peut comporter des erreurs.
 
 ## 🧰 2. Choisir et installer l’OS
 
@@ -149,15 +249,7 @@ La première initialisation peut prendre 5 à 20 minutes.
 
  - Mettre à jour Home Assistant depuis l’interface web.
 
-## ⚠️ Notes importantes
-
-Home Assistant Supervised est sensible aux modifications système.
-
-Éviter d’installer des services qui pourraient entrer en conflit (Docker Swarm, Kubernetes, etc.).
-
-Debian 12 est la seule distribution officiellement supportée pour Supervised.
-
-## 📚 Ressources utiles
+# 📚 Ressources utiles
 
  - Documentation officielle Home Assistant : https://www.home-assistant.io
 
