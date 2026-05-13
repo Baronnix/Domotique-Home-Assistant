@@ -130,6 +130,7 @@ Dans Home Assistant :
 ## 9. 📦 Add-ons utiles
 
 * File Editor : éditer les fichiers YAML
+* Studio Code Server : éditer les fichiers YAML
 * Samba Share : accéder aux fichiers depuis Windows
 * Mosquitto MQTT Broker : pour les appareils MQTT
 
