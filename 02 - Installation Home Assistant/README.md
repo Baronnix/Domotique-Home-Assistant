@@ -70,7 +70,7 @@ Plus de details voir l' episode 01 - Materiel Home Assistant:
 Une fois le Raspberry démarré, ouvrir un navigateur et aller sur :
 * http://homeassistant.local:8123
 Si cela ne fonctionne pas, utiliser l’adresse IP du Raspberry :
-* http://<adresse-ip>:8123
+* http://X.X.X.X:8123
 
 ## 6. 🛠️ Configuration initiale
 
@@ -82,15 +82,24 @@ Si cela ne fonctionne pas, utiliser l’adresse IP du Raspberry :
 
 ## 7. 📡 Activer le Wi‑Fi (optionnel)
 
-Si tu veux utiliser le Wi‑Fi au lieu du câble Ethernet :
+Si tu veux utiliser le Wi‑Fi au lieu du câble Ethernet, il te faut créer une clé USB CONFIG séparée.
 
-1. Insérer la carte SD dans ton ordinateur
+1. Préparer une clé USB:
 
-2. Dans la partition CONFIG, créer un fichier :
+    1. Formate-la en FAT32
+
+    2. Renomme-la exactement : CONFIG (en majuscules)
+
+1. Insérer la clé USB dans ton ordinateur
+
+2. Créer un dossier network à la racine :
+    
+3. Créer un fichier my-network dans le dossier network :
     ``` 
     network/my-network
     ```
-3. Y mettre ce contenu (adapter SSID et mot de passe) :
+
+4. Y mettre ce contenu (adapter SSID et mot de passe) :
     ``` 
     [connection]
     id=my-network
@@ -112,7 +121,7 @@ Si tu veux utiliser le Wi‑Fi au lieu du câble Ethernet :
     [ipv6]
     method=auto
     ```
-4. Sauvegarder, éjecter la carte SD et redémarrer le Raspberry.
+5. Sauvegarder, éjecter la clé USB, la brancher au Raspberry et redémarrer le Raspberry.
 
 ## 8. 🔧 Mise à jour
 Dans Home Assistant :
