@@ -5,7 +5,7 @@ Ce guide explique comment installer Home Assistant OS sur un Raspberry Pi 4.
 
 ## 📺 Vidéo
 
-Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.com/@Baronnix/playlists)
+Lien Youtube: [https://www.youtube.com/watch?v=F-s3jXZxmUI](https://www.youtube.com/watch?v=F-s3jXZxmUI)
 
 ## Comparatif des méthodes d’installation de Home Assistant
 
