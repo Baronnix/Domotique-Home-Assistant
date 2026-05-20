@@ -22,9 +22,9 @@ Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.
 
 ## 1. 📥 Installation
 
-1. Aller dans Paramètres → Modules complémentaires
+1. Aller dans Paramètres → Apps
 
-2. Cliquer sur Boutique des modules complémentaires
+2. Cliquer sur Installer l'appplication
 
 3. Rechercher Mosquitto broker
 
@@ -66,13 +66,25 @@ Créer un utilisateur dédié :
 
 ## 1. 📥 Installation
 
-1. Aller dans Paramètres → Modules complémentaires
+1. Aller dans Paramètres → Apps
 
-2. Cliquer sur Boutique des modules complémentaires
+2. Cliquer sur Installer l'appplication
 
-3. Rechercher Zigbee2MQTT (dépôt officiel ou dépôt de Daniel Welch si nécessaire)
+3. Cliquer sur les 3 petits points verticaux en haut à droite
 
-4. Cliquer sur Installer
+4. Cliquer sur dépôt puis Ajouter
+
+5. Renseigner le dépôt: https://github.com/zigbee2mqtt/hassio-zigbee2mqtt
+
+6. Cliquer sur Ajouter
+
+7. Retourner dans Paramètres → Apps
+
+8. Cliquer sur Installer l'appplication
+
+9. Rechercher Zigbee2MQTT (et non Zigbee2MQTT Proxy ni Zigbee2MQTT Edge)
+
+10. Cliquer sur Installer
 
 ## 2.🔌 Sélection du dongle Zigbee
 
