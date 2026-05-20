@@ -46,6 +46,20 @@ Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.
 
 5. Cliquer sur Démarrer
 
+Normalement, Home Assistant détecte automatiquement le broker MQTT.
+
+Si ce n’est pas le cas :
+
+1. Aller dans Paramètres → Appareils & Services
+
+2. Cliquer sur Ajouter une intégration
+
+3. Rechercher MQTT
+
+4. Ajouter l'intégration
+
+Home Assistant détectera automatiquement Zigbee2MQTT.
+
 ## 3. 👤 Utilisateur MQTT
 
 Home Assistant utilise ses propres utilisateurs.
@@ -56,13 +70,11 @@ Créer un utilisateur dédié :
 
 2. Ajouter un utilisateur :
 
-    * Nom : mqtt
-
-    * Mot de passe : (à choisir)
-
-    * Ne pas cocher "Administrateur"
+    * Nom : mqtt    
 
 # Installer Zigbee2MQTT via Home Assistant
+
+Avant toute chose, brancher le dongle Zigbee
 
 ## 1. 📥 Installation
 
@@ -88,32 +100,43 @@ Créer un utilisateur dédié :
 
 ## 2.🔌 Sélection du dongle Zigbee
 
-1. Ouvrir le module Zigbee2MQTT
+1. Aller dans Paramètres → Système →  Matériel
 
-2. Aller dans Configuration
+2. Dans la liste rechercher le dongle que vous venez de connecter
 
-3. Dans Serial, sélectionner :
+3. Copier le devlink reesemblant à l' example suivant: /dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_502c5c18c278f01195f9fbeba7772636-if00-port0
 
-* ttyUSB0, ttyACM0 ou ttyAMA0 selon votre dongle
+4. Aller dans Paramètres → Apps → Zigbee2MQTT
 
-* Ou utiliser le chemin stable /dev/serial/by-id/...
+5. Aller dans Configuration
 
-## 3. ⚙️ Configuration MQTT
+6. Renseigner base_topic dans la section mqtt: zigbee2mqtt
 
-Dans la configuration du module :
+7. Renseigner port dans la section serial avec la valeur copiée précédement: (à adapter) /dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_502c5c18c278f01195f9fbeba7772636-if00-port0
+
+8. Renseigner adapter dans la section serial avec la valeur copiée précédement: ezsp
+
+9. Enregistrer
+
+10. Vérifier la configuration en yaml:
 
 ```yaml
+data_path: /config/zigbee2mqtt
+socat:
+  enabled: false
+  master: pty,raw,echo=0,link=/tmp/ttyZ2M,mode=777
+  slave: tcp-listen:8485,keepalive,nodelay,reuseaddr,keepidle=1,keepintvl=1,keepcnt=5
+  options: "-d -d"
+  log: false
 mqtt:
   base_topic: zigbee2mqtt
-  server: mqtt://core-mosquitto:1883
-  user: mqtt
-  password: VOTRE_MOT_DE_PASSE
-homeassistant: true
-frontend:
-  port: 8099
+serial:
+  port: >-
+    /dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_502c5c18c278f01195f9fbeba7772636-if00-port0
+  adapter: ezsp
 ```
 
-## 4. ▶️ Lancer Zigbee2MQTT
+## 3. ▶️ Lancer Zigbee2MQTT
 
 1. Activer :
 
@@ -125,29 +148,9 @@ frontend:
 
 3. Ouvrir l’interface Zigbee2MQTT via Ouvrir l’interface Web
 
-# Intégration MQTT dans Home Assistant
+4. Sélectionner le dongle sur la page de lancement
 
-Normalement, Home Assistant détecte automatiquement le broker MQTT.
-
-Si ce n’est pas le cas :
-
-1. Aller dans Paramètres → Appareils & Services
-
-2. Cliquer sur Ajouter une intégration
-
-3. Rechercher MQTT
-
-4. Renseigner :
-
-    * Hôte : core-mosquitto
-
-    * Port : 1883
-
-    * Identifiant : mqtt
-
-    * Mot de passe : celui créé plus tôt
-
-Home Assistant détectera automatiquement Zigbee2MQTT.
+5. Cliquer sur submit
 
 # Appairage d’un bouton Zigbee
 
@@ -155,10 +158,9 @@ Home Assistant détectera automatiquement Zigbee2MQTT.
 
 Dans l’interface Zigbee2MQTT :
 
-1. Aller dans Permit Join
+1. Aller dans Zigbee2MQTT
 
-2. Activer "Allow new devices to join"  
-(ou cliquer sur le bouton Permit Join)
+2. Activer "Autoriser l'appairage"  
 
 ## 2. 🔘 Mettre le bouton en mode appairage
 
