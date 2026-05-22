@@ -18,6 +18,25 @@ Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.
 
 ![zigbee_dongle](images/zigbee_dongle.png)
 
+# 👤 Utilisateur MQTT
+
+Home Assistant utilise ses propres utilisateurs et gère automatiquement les utilisateurs.
+
+Cette section est optionnelle. En effet un utilisateur par defaut sera utilisé pour connecter Zigbee2MQTT au broker MQTT, mais si vous voulez utliser un utilisateur particulier, cela est possible.
+
+Pour créer un utilisateur dédié :
+
+1. Vérifier que le Mode Avancé est activé pour votre utilisateur personnel (nécessaire pour accéder à la section Utilisateurs)
+  * Cliquer sur le nom de votre utilisateur en bas du panneau latéral gauche
+  * Rechercher et activer si nécessaire le Mode Avancé
+
+2. Aller dans Paramètres → Personnes & Utilisateurs → Utilisateurs
+
+3. Ajouter un utilisateur :
+  * Nom : mqtt-robot
+  * Mot de passe : VOTRE_MOT_DE_PASSE (à choisir) 
+  * Ne pas cocher "Administrateur"
+
 # Installer Mosquitto MQTT via Home Assistant
 
 ## 1. 📥 Installation
@@ -36,15 +55,17 @@ Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.
 
 2. Aller dans Configuration
 
-3. Laisser la configuration par défaut (Home Assistant gère automatiquement les utilisateurs)
+3. Vous pouvez laisser la configuration par défaut (Home Assistant gère automatiquement les utilisateurs) ou ajouter un login (si vous voulez utliser un utilisateur particulier)
+  * username: mqtt-robot
+  * password: VOTRE_MOT_DE_PASSE
 
-4. Activer :
+4. Enregistrer
 
+5. Activer :
     * Démarrer au démarrage
-
     * Surveiller
 
-5. Cliquer sur Démarrer
+6. Démarrer ou redémarrer Zigbee2MQTT
 
 Normalement, Home Assistant détecte automatiquement le broker MQTT.
 
@@ -59,18 +80,6 @@ Si ce n’est pas le cas :
 4. Ajouter l'intégration
 
 Home Assistant détectera automatiquement Zigbee2MQTT.
-
-## 3. 👤 Utilisateur MQTT
-
-Home Assistant utilise ses propres utilisateurs.
-
-Créer un utilisateur dédié :
-
-1. Aller dans Paramètres → Personnes & Utilisateurs → Utilisateurs
-
-2. Ajouter un utilisateur :
-
-    * Nom : mqtt    
 
 # Installer Zigbee2MQTT via Home Assistant
 
@@ -110,15 +119,20 @@ Avant toute chose, brancher le dongle Zigbee
 
 5. Aller dans Configuration
 
-6. Renseigner base_topic dans la section mqtt: zigbee2mqtt
+6. Renseigner la section mqtt:
+  * base_topic: zigbee2mqtt
+  Optionnellement (si vous voulez utliser un utilisateur particulier)
+  * server: mqtt://core-mosquitto:1883
+  * user: mqtt-robot
+  * password: VOTRE_MOT_DE_PASSE
 
-7. Renseigner port dans la section serial avec la valeur copiée précédement: (à adapter) /dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_502c5c18c278f01195f9fbeba7772636-if00-port0
+7. Renseigner la section serial:
+  * port: la valeur copiée précédement: (à adapter) /dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_502c5c18c278f01195f9fbeba7772636-if00-port0
+  * adapter: ezsp (à adapter suivant votre dongle)
 
-8. Renseigner adapter dans la section serial avec la valeur copiée précédement: ezsp
+8. Enregistrer
 
-9. Enregistrer
-
-10. Vérifier la configuration en yaml:
+9. Vérifier la configuration en yaml:
 
 ```yaml
 data_path: /config/zigbee2mqtt
@@ -129,12 +143,17 @@ socat:
   options: "-d -d"
   log: false
 mqtt:
+  server: mqtt://core-mosquitto:1883
+  user: mqtt-robot
+  password: VOTRE_MOT_DE_PASSE
   base_topic: zigbee2mqtt
 serial:
   port: >-
     /dev/serial/by-id/usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_502c5c18c278f01195f9fbeba7772636-if00-port0
   adapter: ezsp
 ```
+
+10. Démarrer ou redémarrer Zigbee2MQTT
 
 ## 3. ▶️ Lancer Zigbee2MQTT
 
