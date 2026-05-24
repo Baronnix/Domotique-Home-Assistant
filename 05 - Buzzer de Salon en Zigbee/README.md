@@ -4,7 +4,7 @@ Ce guide explique comment créer un système de buzzers Zigbee dans Home Assista
 
 # 📺 Vidéo
 
-Lien Youtube: [https://www.youtube.com/watch?v=PQOpOTrsC44](https://www.youtube.com/watch?v=PQOpOTrsC44)
+Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.com/@Baronnix/playlists)
 
 # 🎯 Objectif
 

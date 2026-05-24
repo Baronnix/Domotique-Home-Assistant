@@ -4,7 +4,7 @@ Ce guide explique comment installer Mosquitto MQTT et Zigbee2MQTT depuis l’int
 
 # 📺 Vidéo
 
-Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.com/@Baronnix/playlists)
+Lien Youtube: [https://www.youtube.com/watch?v=OB8k7cJiT4g](https://www.youtube.com/watch?v=OB8k7cJiT4g)
 
 # 📦 Prérequis
 
