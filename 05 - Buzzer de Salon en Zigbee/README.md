@@ -50,6 +50,7 @@ Cela simplifie les automatisations.
 On crée deux sélecteurs : un pour le joueur 1, un pour le joueur 2.
 1. Ouvre l'éditeur de configuration de ton choix (ex: Studio Code Server)
 2. Ajoute les 2 input_select suivants:
+
 ```yaml
 input_select:
   couleur_joueur_1:
@@ -103,6 +104,8 @@ input_select:
 4. Vérifier la configuration
 5. Si la configuration est valide, Redémarrer avec un rechargement rapide
 
+La liste des couleurs: [https://www.w3.org/TR/css-color-3/#svg-color](https://www.w3.org/TR/css-color-3/#svg-color)
+
 # 🔢 4. Création de 2 input_number pour mémoriser la victoire et un compteur de réinitialisation
 
 1. Ouvre l'éditeur de configuration de ton choix (ex: Studio Code Server)
@@ -143,54 +146,99 @@ Le principe :
 
 ```yaml
 alias: Buzzer Joueur 1
-trigger:
-  - platform: device
-    device_id: buzzer_joueur_1
-    domain: zha
-    type: remote_button_short_press
-condition:
-  - condition: state
-    entity_id: light.lampe_buzzer
-    state: "off"
-action:
-  - service: light.turn_on
+description: ""
+triggers:
+  - domain: mqtt
+    device_id: 8cdfe9e99a8e42c1b8e69414a201cf66
+    type: action
+    subtype: single
+    metadata: {}
+    trigger: device
+conditions:
+  - condition: numeric_state
+    entity_id: input_number.joueur_gagnant
+    below: 1
+actions:
+  - action: input_number.set_value
+    metadata: {}
+    target:
+      entity_id: input_number.joueur_gagnant
+    data:
+      value: 1
+  - action: light.turn_on
+    metadata: {}
     target:
       entity_id: light.lampe_buzzer
     data:
       color_name: "{{ states('input_select.couleur_joueur_1') }}"
-      brightness: 255
-  - service: input_number.set_value
+      brightness_pct: 100
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: "{{ states('input_number.tempo_joueur_gagnant') }}"
+      milliseconds: 0
+  - action: input_number.set_value
+    metadata: {}
     target:
-      entity_id: input_number.score_joueur
+      entity_id: input_number.joueur_gagnant
     data:
-      value: 1
+      value: 0
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.lampe_buzzer
+    data:
+      brightness_pct: 100
+      color_temp_kelvin: 2700
 mode: single
 ```
 
 🔴 Automatisation pour le Joueur 2
 ```yaml
 alias: Buzzer Joueur 2
-trigger:
-  - platform: device
-    device_id: buzzer_joueur_2
-    domain: zha
-    type: remote_button_short_press
-condition:
-  - condition: state
-    entity_id: light.lampe_buzzer
-    state: "off"
-action:
-  - service: light.turn_on
+description: ""
+triggers:
+  - domain: mqtt
+    device_id: c889dbd51df213df3aae9f45a9130197
+    type: action
+    subtype: single
+    trigger: device
+conditions:
+  - condition: numeric_state
+    entity_id: input_number.joueur_gagnant
+    below: 1
+actions:
+  - action: input_number.set_value
+    metadata: {}
+    target:
+      entity_id: input_number.joueur_gagnant
+    data:
+      value: 2
+  - action: light.turn_on
+    metadata: {}
     target:
       entity_id: light.lampe_buzzer
     data:
       color_name: "{{ states('input_select.couleur_joueur_2') }}"
-      brightness: 255
-  - service: input_number.set_value
+      brightness_pct: 100
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: "{{ states('input_number.tempo_joueur_gagnant') }}"
+      milliseconds: 0
+  - action: input_number.set_value
+    metadata: {}
     target:
-      entity_id: input_number.score_joueur
+      entity_id: input_number.joueur_gagnant
     data:
-      value: 2
+      value: 0
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.lampe_buzzer
+    data:
+      brightness_pct: 100
+      color_temp_kelvin: 2700
 mode: single
 ```
 
@@ -201,22 +249,41 @@ On peut:
 * utiliser un troisième bouton Zigbee, ou
 * créer un bouton virtuel dans Home Assistant
 
+Pour ajouter un bouton virtuel
+* Aller dans Configuration → Appareils et services → Entrées
+* Créer une entrée
+* Choisir Bouton (input_button)
+* Lui donner un nom, par ex. Reset Buzzer
+* Enregistrer
+
 Pour cela on va créer une automatisation qui, lorsqu'elle est déclenchée va:
 1. Définir la variable "joueur gagnant" à la valeur 0
 2. Remettre la lumière dans l'état normale (lumière naturelle)
 
 ```yaml
 alias: Reset Buzzer
-trigger:
-  - platform: device
-    device_id: bouton_reset
-    domain: zha
-    type: remote_button_short_press
-action:
-  - service: light.turn_off
+description: ""
+triggers:
+  - trigger: state
+    entity_id:
+      - input_button.reset_buzzer
+conditions: []
+actions:
+  - action: input_number.set_value
+    metadata: {}
+    target:
+      entity_id: input_number.joueur_gagnant
+    data:
+      value: 0
+  - action: light.turn_on
+    metadata: {}
     target:
       entity_id: light.lampe_buzzer
+    data:
+      brightness_pct: 100
+      color_temp_kelvin: 2700
 mode: single
+
 ```
 
 # 🖼️ 8. Aperçu visuel du tableau de bord
@@ -224,7 +291,7 @@ mode: single
 On va créer un tableau de bord pour le jeu.
 1. Dans ton tableau de bord principal
 2. Passe en mode "Modfier le tableau de bord"
-3. Ajoute une vue
+3. Ajoute une vue de type "Maconnerie"
 4. Créé la vue souhaitée en insérant
      * Le bouton "Reset"
      * Les sélecteurs de couleurs des 2 joueurs
@@ -232,36 +299,14 @@ On va créer un tableau de bord pour le jeu.
      * La variable ""Tempo joueur gagnant" "
 
 ```yaml
-title: Buzzer Quiz
-views:
-  - title: Quiz
-    path: quiz
-    cards:
-
-      - type: entities
-        title: Paramètres des joueurs
-        entities:
-          - entity: input_select.couleur_joueur_1
-            name: Couleur Joueur 1
-          - entity: input_select.couleur_joueur_2
-            name: Couleur Joueur 2
-          - entity: input_number.score_joueur
-            name: Joueur gagnant
-
-      - type: light
-        entity: light.lampe_buzzer
-        name: Lampe Buzzer
-
-      - type: button
-        name: Reset Buzzer
-        icon: mdi:restart
-        tap_action:
-          action: call-service
-          service: input_number.set_value
-          data:
-            value: 0
-          target:
-            entity_id: input_number.score_joueur
+type: entities
+entities:
+  - entity: input_number.joueur_gagnant
+  - entity: light.lampe_buzzer
+  - entity: input_number.tempo_joueur_gagnant
+  - entity: input_select.couleur_joueur_1
+  - entity: input_select.couleur_joueur_2
+  - entity: input_button.reset_buzzer
 ```
 
 # 🧪 9. Tester le système
