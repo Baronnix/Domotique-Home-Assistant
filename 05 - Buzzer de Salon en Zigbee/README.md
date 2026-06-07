@@ -4,7 +4,7 @@ Ce guide explique comment créer un système de buzzers Zigbee dans Home Assista
 
 # 📺 Vidéo
 
-Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.com/@Baronnix/playlists)
+Lien Youtube: [https://www.youtube.com/watch?v=9MrslnI1DvQ](https://www.youtube.com/watch?v=9MrslnI1DvQ)
 
 # 🎯 Objectif
 
@@ -170,7 +170,7 @@ actions:
     target:
       entity_id: light.lampe_buzzer
     data:
-      color_name: "{{ states('input_select.couleur_joueur_1') }}"
+       
       brightness_pct: 100
   - delay:
       hours: 0
@@ -296,7 +296,7 @@ On va créer un tableau de bord pour le jeu.
      * Le bouton "Reset"
      * Les sélecteurs de couleurs des 2 joueurs
      * La variable "Joueur gagnant"
-     * La variable ""Tempo joueur gagnant" "
+     * La variable "Tempo joueur gagnant"
 
 ```yaml
 type: entities
