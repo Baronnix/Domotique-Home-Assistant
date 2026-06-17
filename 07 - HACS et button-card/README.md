@@ -75,72 +75,70 @@ HACS apparaît maintenant dans la barre latérale.
 
 🗂️ Exemple de vue Lovelace (YAML)
 ```yaml
+type: vertical-stack
 title: Lumière Salon
-path: lumiere-salon
-icon: mdi:lightbulb-group
 cards:
-  - type: custom:button-card
-    entity: light.salon
-    name: Ampoule Salon
-    icon: mdi:lightbulb
-    layout: icon_name
-    tap_action:
-      action: toggle
-    styles:
-      icon:
-        - color: >
-            [[[ return entity.state === 'on' ? 'gold' : 'grey'; ]]]
-      card:
-        - border-radius: 12px
-        - padding: 12px
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: light.lampe_buzzer
+        name: Ampoule Salon
+        icon: mdi:lightbulb
+        styles:
+          icon:
+            - color: >
+                [[[ return entity.state === 'on' ? 'green' : 'grey'; ]]]
 ```
 
 # Ajouter des animations d’icônes avec button-card
 
-Voici un exemple avancé avec animation de l’icône, variation de luminosité, et effet pulsation lorsque la lumière est allumée.
+Voici un exemple avancé avec animation de l’icône tel que effetde  pulsation lorsque la lumière est allumée.
 
 ✨ Carte animée pour ampoule Zigbee
 ```yaml
-type: custom:button-card
-entity: light.salon
-name: Ampoule Salon
-icon: mdi:lightbulb
-tap_action:
-  action: toggle
-
-state:
-  - value: 'on'
-    icon: mdi:lightbulb-on
-    styles:
-      icon:
-        - animation: blink 1.5s ease-in-out infinite
-      card:
-        - background: 'rgba(255, 215, 0, 0.2)'
-  - value: 'off'
-    icon: mdi:lightbulb-off
-    styles:
-      icon:
-        - filter: opacity(40%)
-
-styles:
-  card:
-    - border-radius: 16px
-    - padding: 16px
-    - transition: 0.3s
-  icon:
-    - width: 40px
-    - height: 40px
-
-custom_fields:
-  brightness: >
-    [[[ return entity.state === 'on' ? entity.attributes.brightness + '%' : '' ]]]
-
-extra_styles: |
-  @keyframes blink {
-    0% { opacity: 0.4; }
-    50% { opacity: 1; }
-    100% { opacity: 0.4; }
-  }
+type: vertical-stack
+title: Lumière Salon
+cards:
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: light.lampe_buzzer
+        name: Ampoule Salon
+        icon: mdi:lightbulb
+        styles:
+          icon:
+            - animation: |
+                [[[
+                  if (states["light.lampe_buzzer"].state == "on") {
+                    return 'blink 0.5s linear infinite'
+                  }
+                else {
+                  return 'none'
+                }
+                ]]]
+            - color: |
+                [[[ return entity.state === 'on' ? 'green' : 'grey'; ]]]
+          card:
+            - background: rgba(245, 40, 145, 0.2)
+      - type: custom:button-card
+        entity: light.lampe_buzzer
+        name: Ampoule Salon
+        icon: mdi:fan
+        styles:
+          icon:
+            - animation: |
+                [[[
+                  if (states["light.lampe_buzzer"].state == "on") {
+                    return 'rotating 0.5s linear infinite'
+                  }
+                else {
+                  return 'none'
+                }
+                ]]]
+            - color: |
+                [[[ return entity.state === 'on' ? 'green' : 'grey'; ]]]
+          card:
+            - background: rgba(0, 40, 145, 0.2)
 ```  
 
 # Résultat final
