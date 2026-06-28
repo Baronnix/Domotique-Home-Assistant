@@ -2,6 +2,10 @@
 
 Ce guide explique comment ajouter HACS, installer des features communautaires (dont button-card) et créer une vue animée pour une ampoule Zigbee
 
+# 📺 Vidéo
+
+Lien Youtube: [https://www.youtube.com/watch?v=8RZtPTxC_Nk](https://www.youtube.com/watch?v=8RZtPTxC_Nk)
+
 # 📌 Objectifs du tutoriel
 
 * Installer HACS (Home Assistant Community Store)
@@ -72,7 +76,7 @@ HACS apparaît maintenant dans la barre latérale.
 5. Redémarrer Home Assistant
 
 # Créer une vue dédiée à l’ampoule Zigbee
-
+ 
 🗂️ Exemple de vue Lovelace (YAML)
 ```yaml
 type: vertical-stack

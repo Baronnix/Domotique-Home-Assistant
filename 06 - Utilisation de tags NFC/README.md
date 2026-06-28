@@ -2,6 +2,10 @@
 
 Ce tutoriel explique comment appairer une prise ou ampoule Zigbee, créer une automatisation dans Home Assistant et associer un tag NFC pour changer l’état de la prise ou ampoule (ON/OFF) en la scannant avec un smartphone compatible NFC.
 
+# 📺 Vidéo
+
+Lien Youtube: [https://www.youtube.com/watch?v=lWhhbuQt8qc](https://www.youtube.com/watch?v=lWhhbuQt8qc)
+
 # ✨ Objectif
 
 Scanner un tag NFC → Home Assistant reçoit l’événement → l’automatisation bascule l’état d’une prise ou ampoule Zigbee (allumer si éteinte, éteindre si allumée).
