@@ -156,23 +156,23 @@ input_select:
   midi_channel:
     name: MIDI Channel
     options:
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-      - 9
-      - 10
-      - 11
-      - 12
-      - 13
-      - 14
-      - 15
-      - 16
-    initial: 1
+      - "1"
+      - "2"
+      - "3"
+      - "4"
+      - "5"
+      - "6"
+      - "7"
+      - "8"
+      - "9"
+      - "10"
+      - "11"
+      - "12"
+      - "13"
+      - "14"
+      - "15"
+      - "16"
+    initial: "1"
     icon: mdi:midi
 ```
 3. Ouvre Paramètres → Outils de développement dans Home Assistant.
@@ -253,15 +253,57 @@ cards:
 ```
 7. Enregistrer
 
-## 🧪 5. Tester
-
-1. Branche l'ESP32S3 devkit sur le port USB-OTG
-2. Ouvre Midi View
-3. Joue avec le channel et appui sur les boutons
-4. Tu devrais voir les notes s'afficher dans Midi View
-
-## 🔥 Pour aller plus loin
+## 🔢 5. Créer une automatisation appelant le script quand on appui sur un bouton Zigbee
 
 Vous pouvez utiliser les boutons physique Zigbee du tutoriel [05 - Buzzer de Salon en Zigbee](https://github.com/Baronnix/Domotique-Home-Assistant/tree/main/05%20-%20Buzzer%20de%20Salon%20en%20Zigbee) pour appeler le script play_note_script. La [vidéo est disponible sur youtube](https://www.youtube.com/watch?v=9MrslnI1DvQ).
 
 Cela permet de coupler les buzzers à des scènes audio ou vidéo.
+
+1. Aller dans Paramètres → Automatisations et scènes → Automatisations
+2. Créer une automatisaton qui se lance sur l'appui du bouton et qui appelle le script play_note_script en passant la valeur de la note en paramètre
+
+🔵 Automatisation pour le Bouton 1
+```yaml
+alias: bouton 1 - Note 60
+description: ""
+triggers:
+  - domain: mqtt
+    device_id: 8cdfe9e99a8e42c1b8e69414a201cf66
+    type: action
+    subtype: single
+    metadata: {}
+    trigger: device
+conditions: []
+actions:
+  - action: script.play_note_script
+    metadata: {}
+    data:
+      note: "60"
+mode: single
+```
+
+🔴 Automatisation pour le Bouton 2
+```yaml
+alias: bouton 2 - note 70
+description: ""
+triggers:
+  - domain: mqtt
+    device_id: c889dbd51df213df3aae9f45a9130197
+    type: action
+    subtype: single
+    trigger: device
+conditions: []
+actions:
+  - action: script.play_note_script
+    metadata: {}
+    data:
+      note: "70"
+mode: single
+```
+
+## 🧪 6. Tester
+
+1. Branche l'ESP32S3 devkit sur le port USB-OTG
+2. Ouvre Midi View
+3. Joue avec le channel et appui sur les boutons virtuels et réels
+4. Tu devrais voir les notes s'afficher dans Midi View
