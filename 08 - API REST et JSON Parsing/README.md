@@ -196,8 +196,8 @@ On va créer un script à appeler par les boutons du dashboard. On pourrait appe
 play_note_script:
   sequence:
   - data:
-      channel: '{{ ( states(''input_select.midi_channel'') | int ) | string }}'
-      note: '{{ note }}'
+      channel: "{{ states('input_select.midi_channel') | string }}"
+      note: "{{ note }}"
     action: rest_command.play_note
   alias: play_note_script
   description: ''
@@ -217,7 +217,7 @@ play_note_script:
 6. Coller le code suivant
 ```yaml
 type: vertical-stack
-title: Lumière Salon
+title: Dashboard MIDI
 cards:
   - type: horizontal-stack
     cards:
@@ -249,7 +249,7 @@ cards:
           action: call-service
           service: script.play_note_script
           service_data:
-            note: "70"
+            note: "62"
 ```
 7. Enregistrer
 
@@ -284,7 +284,7 @@ mode: single
 
 🔴 Automatisation pour le Bouton 2
 ```yaml
-alias: bouton 2 - note 70
+alias: bouton 2 - note 62
 description: ""
 triggers:
   - domain: mqtt
@@ -297,7 +297,7 @@ actions:
   - action: script.play_note_script
     metadata: {}
     data:
-      note: "70"
+      note: "62"
 mode: single
 ```
 
