@@ -6,6 +6,10 @@ Ce guide explique comment :
  * Programmer un ESP32-CAM (ou autre module caméra compatible) via ESPHome Builder
  * Intégrer la caméra dans Home Assistant
 
+# 📺 Vidéo
+
+Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.com/@Baronnix/playlists)
+
 # 🏗️ 1. Prérequis
 
  * Une instance fonctionnelle de Home Assistant version 2026
