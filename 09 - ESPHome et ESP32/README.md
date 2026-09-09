@@ -64,6 +64,9 @@ Configuration de l'ESP:
 Une fois flashé, l’ESP redémarre et se connecte au Wi-Fi.
 
 ```yaml
+# Board: AI Thinker ESP32-CAM (AI Thinker)
+# Definition: definitions/boards/esp32cam/manifest.yaml
+
 substitutions:
   devicename: esp-cam-01
   friendly_name: ESP-CAM-01
@@ -73,53 +76,48 @@ esphome:
   friendly_name: $friendly_name
 
 esp32:
-  board: esp32dev
+  variant: esp32
+  flash_size: 4MB
   framework:
     type: arduino
 
-# Enable logging
 logger:
 
-# Enable Home Assistant API
 api:
-  reboot_timeout: 0s
   encryption:
-    key: "degyuagUHUSHDUISUIFDHJCHUDYFD="
+    key: "cs6NA6R7LNrDInydwpRl/OXcYnxz5agVS+bEAkz2f6U="
 
 ota:
-  platform: esphome
-  password: "degyuagUHUSHDUISUIFDHJCHUDYFD"
+  - platform: esphome
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "Esp-Cam-01 Fallback Hotspot"
-    password: "WDSFSDFRsddf"
+    ssid: camera-01 Fallback Hotspot
+    password: "mzvH7LMe1tGo"
 
 captive_portal:
 
-web_server:
-  port: 80
+i2c:
+  - scl: GPIO27
+    sda: GPIO26
+    id: i2c_1
 
+psram:
+  mode: quad
+  speed: 80MHz
+  
 esp32_camera:
   name: $devicename
+  i2c_id: i2c_1
+  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
   external_clock:
     pin: GPIO0
-    frequency: 10MHz
-  i2c_pins:
-    sda: GPIO26
-    scl: GPIO27
-  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
-  vsync_pin: GPIO25
   href_pin: GPIO23
   pixel_clock_pin: GPIO22
-  power_down_pin: GPIO32
-  
-  # Image/Video settings: https://esphome.io/components/esp32_camera
-  
+  vsync_pin: GPIO25
+
   max_framerate: 25 fps
   idle_framerate: 0.2 fps
   resolution: 1024x768
@@ -129,20 +127,19 @@ esp32_camera:
   brightness: 0
   saturation: 0
 
-# Serveur video/pictures: https://esphome.io/components/esp32_camera_web_server
-
 esp32_camera_web_server:
-  - port: 8080
-    mode: stream
-  - port: 8081
-    mode: snapshot
+  - mode: STREAM
+    port: 8080
+    id: esp32_camera_web_server_1
+  - mode: SNAPSHOT
+    port: 8081
+    id: esp32_camera_web_server_2
 
 time:
   - platform: homeassistant
     id: homeassistant_time
 
 output:
-  #flashlight
   - platform: gpio
     pin: GPIO4
     id: gpio_4
@@ -174,10 +171,11 @@ text_sensor:
   - platform: wifi_info
     ssid: 
         name: $friendly_name ESPHome WiFi
-
+        
 switch:
   - platform: restart
     name: $friendly_name restart
+
 ```
 
 # 🔗 4. Ajouter l’ESP dans Home Assistant
