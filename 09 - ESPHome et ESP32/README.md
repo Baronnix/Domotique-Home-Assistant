@@ -20,19 +20,14 @@ Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.
  * Un câble USB pour la programmation (flash de l'ESP). Attention, de nombreuses cartes de téléchargement ont un port micro-usb
  * Un réseau Wi-Fi 2.4 GHz
  * Un navigateur web moderne
- * Un compte GitHub (obligatoire pour HACS)
- * HACS installé (Home Assistant Community Store)
-    * Se référer au tutoriel num◙ro "07 - HACS et button-card"
-       * GitHub: https://github.com/Baronnix/Domotique-Home-Assistant/tree/main/07%20-%20HACS%20et%20button-card
-       * Vidéo: https://www.youtube.com/watch?v=8RZtPTxC_Nk
 
 # ⚙️ 2. Installation d’ESPHome dans Home Assistant
 
 ESPHome permet de compiler et flasher facilement des firmwares pour ESP.
 
 Installation
-1. Ouvrez HACS → Intégrations
-2. Cliquez sur + Explorer & Télécharger
+1. Ouvrez Paramètres → Apps
+2. Cliquez sur Installer l'application
 3. Recherchez ESPHome
 4. Installez l’intégration
 5. Redémarrez Home Assistant
