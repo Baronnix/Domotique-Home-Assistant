@@ -36,6 +36,8 @@ Vous verrez ensuite un nouvel onglet ESPHome dans la barre latérale.
 
 # 🛠️ 3. Programmer l’ESP avec ESPHome Builder
 
+## Configuration de l'ESP
+
 ESPHome Builder est un outil en ligne permettant de générer un firmware ESPHome en décrivant sa configration au format YAML.
 
 Configuration de identifiants Wifi:
@@ -44,7 +46,7 @@ Configuration de identifiants Wifi:
 3. Renseigner les identifiants Wifi tel que:
 ```yaml
 # Your Wi-Fi SSID and password
-wifi_ssid: "Baronnix"
+wifi_ssid: "NOMWIFI"
 wifi_password: "MOTDEPASSE"
 ```
 
@@ -175,8 +177,73 @@ text_sensor:
 switch:
   - platform: restart
     name: $friendly_name restart
-
 ```
+
+## Préparer l'environnement pour compiler et flasher
+
+### Configuration des serveurs DNS (Optionnel)
+
+Pour pouvoir compiler, des bibliothèques doivent être téléchargée. Le Serveur DNS est le serveur qui sera appelé lors de la compilation pour résoudre les adresses url des librairies. Il se peut que le serveur par défaut ne suffise pas et que la compilation échoue avec des messages du type: 
+
+* ERROR: Could not install packages due to an OSError: HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Max retries exceeded with url: /packages/f3/6e/1736e5b4ae2b778ef2f81c47d797de9f891d4d8acb047a24ca37a60294dd/pip-26.2.1-py3-none-any.whl.metadata (Caused by NameResolutionError("HTTPSConnection(host='files.pythonhosted.org', port=443): Failed to resolve 'files.pythonhosted.org' ([Errno -2] Name or service not known)"))
+
+Dans ca cas, on rajoutera à la main un Serverur DNS, ici celui Cloudflare
+1. Dans Home Assistant, va dans: Paramètres → Système → Réseau
+2. Sélectionne ton interface réseau (eth0 ou wlan0)
+3. Cherche si le champ Serveur DNS est configuré pour IPv4 ou IPv6
+4. Ajouter un serveur DNS
+5. Choisir Cloudflare
+6. 2 serveurs DNS ont dû être ajoutés:
+  * 1.1.1.1
+  * 1.0.0.1
+7. Enregistrer
+8. Redémarrer Home Assistant: Paramètres → Outils de développement → Redémarrer → Redémarrer Home Assistant
+
+### Installation du driver CH340
+
+Pour pouvoir flasher, la carte de l'ESP32-CAM doit être reconnue. Il faut installer le driver CH340 (Windows):
+1. Télécharger le driver officiel: https://sparks.gogo.co.nz/ch340.html
+2. Dézipper le fichier téléchargé
+3. Lancer CH34x_Install_Windows_v3_4.EXE
+4. Cliquer sur INSTALL
+
+
+## Compiler et flasher 
+
+Une fois la configuration et l'environnement prêts on va compiler et flasher. 
+
+Il existe plusieurs méthodes, on va en voir 2.
+
+### Compiler et flasher en utilisant Home Assistant
+
+Cett méthode est directement intégrée dans Home Assistant.
+
+1. Aller dans l'éditeur de configuration YAML du composant
+2. Cliquer sur Installer
+3. Choisir Brancher sur cet ordinateur
+4. Attendre la fin de la compilation
+5. Cliquer sur: Open USB flasher
+6. Cliquer sur: Connect & install
+7. Choisir le port USB et cliquer sur: Connect
+8. Attendre la fin du téléversement, une fenêtre s'ouvrir monttrant les logs du composant
+
+### Compiler et flasher en utilisant https://web.esphome.io/
+
+Cette méthode vous permet de flasher votre composant hors Home Assistant et de conserver les fichiers binaires pour une sauvegarde en cas de besoin ultérieur.
+
+1. Aller dans l'éditeur de configuration YAML du composant
+2. Cliquer sur Installer
+3. Choisir: Options avancées
+4. Choisir: Télécharger le binaire du firmware
+5. Attendre la fin de la compilation
+6. Choisir le type de binaire: Image d'usine
+7. Autoriser le téléchargement
+8. Aller sur https://web.esphome.io/
+9. Cliquer sur: Connection
+10. Choisir le port USB et cliquer sur: Connect
+11. Cliquer sur: Installer
+12. Choisir le fichier binaire téléchargé précédemment
+13. Cliquer sur: Installer
 
 # 🔗 4. Ajouter l’ESP dans Home Assistant
 
