@@ -78,7 +78,7 @@ esphome:
   friendly_name: $friendly_name
 
 esp32:
-  variant: esp32
+  board: esp32cam
   flash_size: 4MB
   framework:
     type: arduino
@@ -119,6 +119,7 @@ esp32_camera:
   href_pin: GPIO23
   pixel_clock_pin: GPIO22
   vsync_pin: GPIO25
+  power_down_pin: GPIO32
 
   max_framerate: 25 fps
   idle_framerate: 0.2 fps
