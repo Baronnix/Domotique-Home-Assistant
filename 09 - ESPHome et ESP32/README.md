@@ -8,7 +8,7 @@ Ce guide explique comment :
 
 # 📺 Vidéo
 
-Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.com/@Baronnix/playlists)
+Lien Youtube: [https://www.youtube.com/watch?v=JBqC7CIUOCE](https://www.youtube.com/watch?v=JBqC7CIUOCE)
 
 # 🏗️ 1. Prérequis
 
