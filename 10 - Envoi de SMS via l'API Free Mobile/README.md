@@ -4,7 +4,7 @@ Ce tutoriel explique comment mettre en place un système d'envoi de SMS dans Hom
 
 # 📺 Vidéo
 
-Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.com/@Baronnix/playlists)
+Lien Youtube: [https://www.youtube.com/watch?v=iw6fIznQxdw](https://www.youtube.com/watch?v=iw6fIznQxdw)
 
 # 🎯 Objectif
 
