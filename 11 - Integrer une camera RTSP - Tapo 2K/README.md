@@ -10,18 +10,18 @@ Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.
 
 # 🎯 Objectif
 
-✅ Configurer correctement une caméra Tapo dans l'application mobile
-✅ Activer les protocoles RTSP et ONVIF pour une utilisation locale
-✅ Attribuer une adresse IP fixe à la caméra pour garantir sa stabilité
-✅ Isoler la caméra d'Internet tout en conservant son fonctionnement local
-✅ Ajouter la caméra dans Home Assistant
-✅ Installer l'intégration Tapo Control
-✅ Utiliser les fonctions Pan/Tilt directement depuis Home Assistant
-✅ Récupérer les événements et détections de mouvement de la caméra
-✅ Comprendre les avantages et les limites de l'intégration native
-✅ Découvrir l'installation de Frigate pour la détection IA locale
-✅ Améliorer la reconnaissance des personnes, véhicules et animaux sans dépendre du cloud
-✅ Construire une solution de vidéosurveillance 100 % locale, sécurisée et respectueuse de la vie privée
+* ✅ Configurer correctement une caméra Tapo dans l'application mobile
+* ✅ Activer les protocoles RTSP et ONVIF pour une utilisation locale
+* ✅ Attribuer une adresse IP fixe à la caméra pour garantir sa stabilité
+* ✅ Isoler la caméra d'Internet tout en conservant son fonctionnement local
+* ✅ Ajouter la caméra dans Home Assistant
+* ✅ Installer l'intégration Tapo Control
+* ✅ Utiliser les fonctions Pan/Tilt directement depuis Home Assistant
+* ✅ Récupérer les événements et détections de mouvement de la caméra
+* ✅ Comprendre les avantages et les limites de l'intégration native
+* ✅ Découvrir l'installation de Frigate pour la détection IA locale
+* ✅ Améliorer la reconnaissance des personnes, véhicules et animaux sans dépendre du cloud
+* ✅ Construire une solution de vidéosurveillance 100 % locale, sécurisée et respectueuse de la vie privée
 
 ## 1. 📋 Prérequis
 
