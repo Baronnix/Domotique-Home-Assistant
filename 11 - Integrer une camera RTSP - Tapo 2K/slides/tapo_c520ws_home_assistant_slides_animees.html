@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tapo C520WS — Home Assistant</title>
+<style>
+:root{--bg:#0b1020;--panel:#192641;--text:#f5f7ff;--muted:#bdc8dc;--cyan:#53d8ee;--green:#65dfa1;--orange:#ffc15c;--red:#ff727c}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+body{overflow:hidden}.stage{height:100%;display:grid;place-items:center;padding:28px 28px 72px}
+.slide{display:none;position:relative;width:min(1200px,96vw);height:min(675px,86vh);padding:3.5% 5.5% 4%;overflow:hidden;border:1px solid #354765;border-radius:22px;background:radial-gradient(circle at 90% 0%,#24385c 0,transparent 36%),linear-gradient(135deg,#121d33,#0b1020 75%);box-shadow:0 22px 70px #0009}
+.slide.active{display:flex;flex-direction:column;animation:slideIn .28s ease-out}.reveal{opacity:0;transform:translateY(14px);transition:opacity .35s ease,transform .35s ease}.reveal.visible{opacity:1;transform:translateY(0)}@keyframes slideIn{from{opacity:.7;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}
+.kicker{color:var(--cyan);font-weight:bold;text-transform:uppercase;letter-spacing:.16em;font-size:13px;margin-bottom:16px}
+h1{font-size:clamp(30px,3.7vw,46px);line-height:1.04;margin:0 0 12px}h2{font-size:clamp(23px,2.65vw,32px);line-height:1.08;margin:0 0 14px;max-width:100%}
+.subtitle{font-size:clamp(18px,2vw,24px);line-height:1.45;color:var(--muted);max-width:850px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;flex:1;min-height:0}
+.card{background:linear-gradient(145deg,#223352,#17243c);border:1px solid #3a4d6d;border-radius:16px;padding:14px 16px;min-height:0}
+.card h3{font-size:clamp(15px,1.55vw,19px);margin:0 0 7px}.card p,.card li{color:var(--muted);font-size:clamp(12px,1.12vw,14px);line-height:1.32}
+.card p{margin:0}.card ul{padding-left:18px;margin:5px 0 0}.card li{margin:3px 0}
+.tag{display:inline-block;padding:5px 9px;border-radius:20px;background:#214157;color:var(--cyan);font-size:11px;font-weight:bold;margin-bottom:9px}
+.tag.green{background:#1c4438;color:var(--green)}.tag.orange{background:#4a3920;color:var(--orange)}.tag.red{background:#4b2930;color:var(--red)}
+.note{margin-top:9px;padding:9px 12px;border-left:4px solid var(--orange);border-radius:0 10px 10px 0;background:#2c281f;color:#f6dfb6;font-size:14px;line-height:1.4}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:9px;margin:16px 0}.flow .card{text-align:center;display:flex;flex-direction:column;justify-content:center}.plus{align-self:center;color:var(--cyan);font-size:30px;font-weight:bold}
+.bigline{font-size:clamp(17px,2vw,23px);font-weight:bold;line-height:1.22;margin:6px 0}
+.foot{position:absolute;bottom:14px;left:6%;right:6%;display:flex;justify-content:space-between;color:#8292ad;font-size:11px}
+.controls{position:fixed;bottom:15px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:12px;color:#d4dced;font-size:13px}
+button{background:#1b2a45;color:white;border:1px solid #506483;border-radius:8px;padding:8px 14px;font-size:16px;cursor:pointer}button:hover{background:#2b4164}
+.track{height:4px;width:110px;background:#34435d;border-radius:8px;overflow:hidden}.progress{height:100%;width:16.666%;background:var(--cyan)}
+@media(max-width:700px){.stage{padding:8px 6px 58px}.slide{width:98vw;height:88vh;padding:18px 14px 42px}.kicker{font-size:10px;margin-bottom:9px}h1{font-size:clamp(27px,7vw,38px)}h2{font-size:clamp(21px,5.4vw,29px);margin-bottom:10px}.grid{gap:7px}.card{padding:9px}.card h3{font-size:14px}.card p,.card li{font-size:11px;line-height:1.25}.tag{font-size:9px;padding:4px 7px}.flow{gap:4px;margin:10px 0}.plus{font-size:18px}.note{font-size:11px;padding:7px 9px}.bigline{font-size:16px}.foot{bottom:7px}.controls{gap:6px;font-size:10px}.track{width:55px}}
+</style>
+</head>
+<body>
+<main class="stage">
+<section class="slide active">
+<div class="kicker">Home Assistant • Tutoriel caméra</div>
+<h1>Tapo C520WS :<br>quelle intégration choisir ?</h1>
+<p class="subtitle">Image, détection et pilotage : trois briques complémentaires pour exploiter la caméra dans Home Assistant.</p>
+<div class="grid" style="margin-top:28px">
+<div class="card"><span class="tag">OBJECTIF 1</span><h3>Voir</h3><p>Récupérer le flux vidéo et, selon le flux utilisé, le son.</p></div>
+<div class="card"><span class="tag green">OBJECTIF 2</span><h3>Détecter</h3><p>Exploiter les événements de mouvement et les détections intelligentes.</p></div>
+<div class="card"><span class="tag orange">OBJECTIF 3</span><h3>Agir</h3><p>Contrôler l'orientation, l'éclairage, la sirène et les options compatibles.</p></div>
+<div class="card"><span class="tag">RÉSULTAT</span><h3>Automatiser</h3><p>Relier les événements aux actions de toute l'installation domotique.</p></div>
+</div><div class="foot"><span>Tapo C520WS dans Home Assistant</span><span>01 / 06</span></div>
+</section>
+<section class="slide">
+<div class="kicker">Les intégrations testées</div><h2>Quatre pistes, mais une intégration TP-Link non concluante</h2>
+<div class="grid">
+<div class="card"><span class="tag red">NON RETENUE • TEST PERSONNEL</span><h3>Intégration officielle TP-Link</h3><p>L'étape d'authentification n'a pas abouti, même après mise à jour de Home Assistant. Elle n'a donc pas pu être validée dans cet essai.</p></div>
+<div class="card"><span class="tag">NATIVE</span><h3>Caméra générique</h3><p>Ajoute le flux RTSP à Home Assistant pour afficher la vidéo et, si le flux et le lecteur le permettent, récupérer le son.</p></div>
+<div class="card"><span class="tag green">NATIVE</span><h3>ONVIF</h3><p>Expose les événements compatibles : mouvement et, selon les capacités remontées par la caméra, certaines détections intelligentes.</p></div>
+<div class="card"><span class="tag orange">TIERS • HACS</span><h3>Tapo: Cameras Control</h3><p>Intégration communautaire installée via HACS. Elle ajoute des commandes de pilotage, selon le modèle et le firmware.</p></div>
+</div><div class="foot"><span>Résultats correspondant aux essais présentés dans la vidéo</span><span>02 / 06</span></div>
+</section>
+<section class="slide">
+<div class="kicker">Détail des rôles</div><h2>Les trois briques complémentaires</h2>
+<div class="grid">
+<div class="card"><span class="tag">01 • IMAGE & SON</span><h3>Caméra générique — RTSP</h3><ul><li>Récupère le flux RTSP de la Tapo.</li><li>Affiche l'image dans un tableau de bord Home Assistant.</li><li>L'audio dépend du flux configuré et du lecteur utilisé.</li></ul></div>
+<div class="card"><span class="tag green">02 • ÉVÉNEMENTS</span><h3>ONVIF</h3><ul><li>Remonte les événements pris en charge.</li><li>Peut exposer le mouvement et certains types d'objets détectés.</li><li>Les événements disponibles dépendent du firmware et de la configuration.</li></ul></div>
+<div class="card" style="grid-column:1/-1"><span class="tag orange">03 • COMMANDES</span><h3>Tapo: Cameras Control — via HACS</h3><ul><li>Ajoute des commandes de déplacement Pan/Tilt et de positionnement.</li><li>Selon les entités exposées : projecteurs, sirène, suivi automatique, mode privé, vision nocturne et réglages audio.</li><li>Installer via HACS, redémarrer Home Assistant, puis ajouter l'intégration. Activer les accès tiers dans l'application Tapo si demandé.</li></ul></div>
+</div><div class="foot"><span>Vérifier les fonctions réellement exposées sur votre installation</span><span>03 / 06</span></div>
+</section>
+<section class="slide">
+<div class="kicker">Architecture recommandée selon les tests</div><h2>Pour tout exploiter, combiner les trois intégrations</h2>
+<div class="flow">
+<div class="card"><span class="tag">CAMÉRA GÉNÉRIQUE</span><h3>Voir</h3><p>Flux RTSP<br>Vidéo • audio*</p></div><div class="plus">+</div>
+<div class="card"><span class="tag green">ONVIF</span><h3>Détecter</h3><p>Mouvement<br>Événements*</p></div><div class="plus">+</div>
+<div class="card"><span class="tag orange">TAPO: CAMERAS CONTROL</span><h3>Piloter</h3><p>PTZ • projecteurs<br>Sirène • options*</p></div>
+</div>
+<p class="bigline">Trois rôles distincts : le flux, les événements et les commandes.</p>
+<div class="note">* Les fonctions exactes dépendent du firmware, des capacités exposées et de la configuration. Tapo: Cameras Control est une intégration communautaire, pas une intégration native.</div>
+<div class="foot"><span>Architecture issue des essais décrits dans la vidéo</span><span>04 / 06</span></div>
+</section>
+<section class="slide">
+<div class="kicker">Fiche caméra • modèle confirmé</div><h2>Tapo C520WS : les fonctionnalités à connaître</h2>
+<div class="grid">
+<div class="card"><span class="tag">IMAGE & VISION NOCTURNE</span><h3>2K QHD • 2560 × 1440</h3><ul><li>Vision nocturne infrarouge.</li><li>Vision nocturne couleur Starlight.</li><li>Deux projecteurs intégrés pour éclairer la scène.</li><li>Modes et réglages nocturnes selon l'application Tapo.</li></ul></div>
+<div class="card"><span class="tag green">DÉTECTION INTELLIGENTE</span><h3>Identifier les événements</h3><ul><li>Détection de mouvement, de personne, d'animal et de véhicule.</li><li>Détection de franchissement de ligne et de sabotage.</li><li>Zones d'activité et sensibilité réglables.</li><li>Notifications dans l'application Tapo.</li></ul></div>
+<div class="card"><span class="tag orange">MOUVEMENT & DISSUASION</span><h3>Pan / Tilt • suivi • alarme</h3><ul><li>Rotation motorisée : couverture panoramique à 360°.</li><li>Suivi automatique et patrouille entre positions prédéfinies.</li><li>Alarme sonore et lumineuse personnalisable.</li><li>Sirène annoncée jusqu'à 93 dB par le constructeur.</li></ul></div>
+<div class="card"><span class="tag">AUDIO & STOCKAGE</span><h3>Communiquer et enregistrer</h3><ul><li>Microphone et haut-parleur : audio bidirectionnel.</li><li>Enregistrement local sur carte microSD (jusqu'à 512 Go annoncé).</li><li>Stockage cloud Tapo Care en option.</li><li>Wi-Fi, Ethernet, RTSP et ONVIF.</li></ul></div>
+</div>
+<div class="note">Cette fiche présente les capacités annoncées pour la caméra. Leur présence dans Home Assistant dépend de l'intégration utilisée et des entités réellement exposées.</div>
+<div class="foot"><span>Fiche technique Tapo C520WS</span><span>05 / 06</span></div>
+</section>
+<section class="slide">
+<div class="kicker">Conclusion</div><h2>De la caméra aux automatisations</h2>
+<div class="grid">
+<div class="card"><span class="tag">DÉCLENCHEUR</span><h3>Un événement</h3><p>Un mouvement est détecté ou une personne/un animal est identifié, si l'événement est disponible.</p></div>
+<div class="card"><span class="tag green">CONDITION</span><h3>Une logique</h3><p>Horaire, présence, mode maison ou toute autre condition Home Assistant.</p></div>
+<div class="card"><span class="tag orange">ACTION</span><h3>Une réponse</h3><p>Allumer un projecteur, déclencher la sirène, envoyer une notification ou orienter la caméra.</p></div>
+<div class="card"><span class="tag">À RETENIR</span><h3>Une intégration complète</h3><p>Caméra générique + ONVIF + Tapo: Cameras Control pour couvrir les besoins testés.</p></div>
+</div>
+<div class="note">L'intégration officielle TP-Link pourrait éventuellement regrouper plusieurs fonctions, mais elle n'a pas pu être validée lors de ces essais à cause de l'authentification.</div>
+<p class="bigline">La Tapo C520WS devient un véritable capteur et actionneur de votre maison connectée.</p>
+<div class="foot"><span>Fin • Tapo C520WS dans Home Assistant</span><span>06 / 06</span></div>
+</section>
+</main>
+<nav class="controls" aria-label="Navigation des diapositives">
+<button id="prev" type="button" aria-label="Diapositive précédente">← Précédent</button><span id="count">1 / 6</span><div class="track"><div class="progress" id="progress"></div></div><button id="next" type="button">Bloc suivant →</button><button id="all" type="button">Tout afficher</button><span class="hint" id="hint">Clic / → : révéler • F : plein écran</span>
+</nav>
+<script>
+(() => {
+  const slides = [...document.querySelectorAll('.slide')];
+  const count = document.getElementById('count');
+  const progress = document.getElementById('progress');
+  const nextButton = document.getElementById('next');
+  const hint = document.getElementById('hint');
+  let current = 0;
+  const states = [];
+
+  function collect(slide) {
+    const items = [];
+    const add = el => {
+      if (el && !items.includes(el)) {
+        el.classList.add('reveal');
+        items.push(el);
+      }
+    };
+
+    add(slide.querySelector('.kicker'));
+    add(slide.querySelector('h1'));
+    add(slide.querySelector('h2'));
+    add(slide.querySelector('.subtitle'));
+
+    slide.querySelectorAll('.grid').forEach(grid => {
+      [...grid.children].forEach(child => {
+        if (child.classList.contains('card')) add(child);
+      });
+    });
+    slide.querySelectorAll('.flow').forEach(flow => {
+      [...flow.children].forEach(add);
+    });
+    slide.querySelectorAll('.note').forEach(add);
+    slide.querySelectorAll('.bigline').forEach(add);
+
+    return items;
+  }
+
+  slides.forEach(slide => states.push({items: collect(slide), shown: 0}));
+
+  function update() {
+    count.textContent = `${current + 1} / ${slides.length}`;
+    progress.style.width = `${(current + 1) / slides.length * 100}%`;
+    const state = states[current];
+    const remaining = state.items.length - state.shown;
+    nextButton.textContent = remaining > 0 ? 'Bloc suivant →' : 'Diapositive suivante →';
+    hint.textContent = remaining > 0
+      ? `${remaining} bloc(s) à révéler • clic ou →`
+      : 'Diapositive complète • → pour continuer';
+  }
+
+  function revealOne() {
+    const state = states[current];
+    if (state.shown < state.items.length) {
+      state.items[state.shown].classList.add('visible');
+      state.shown += 1;
+      update();
+    } else if (current < slides.length - 1) {
+      openSlide(current + 1);
+    }
+  }
+
+  function revealEverything() {
+    const state = states[current];
+    state.items.forEach(item => item.classList.add('visible'));
+    state.shown = state.items.length;
+    update();
+  }
+
+  function openSlide(index) {
+    current = Math.max(0, Math.min(slides.length - 1, index));
+    slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+
+    // Toujours afficher immédiatement le repère et le titre de la diapositive.
+    const state = states[current];
+    const titleCount = Math.min(3, state.items.length);
+    for (let i = 0; i < titleCount; i++) state.items[i].classList.add('visible');
+    state.shown = Math.max(state.shown, titleCount);
+    update();
+  }
+
+  document.getElementById('prev').addEventListener('click', () => openSlide(current - 1));
+  nextButton.addEventListener('click', revealOne);
+  document.getElementById('all').addEventListener('click', revealEverything);
+
+  slides.forEach(slide => {
+    slide.addEventListener('click', event => {
+      if (event.target.closest('button, a')) return;
+      revealOne();
+    });
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight' || event.key === ' ') {
+      event.preventDefault();
+      revealOne();
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      openSlide(current - 1);
+    } else if (event.key.toLowerCase() === 'a') {
+      revealEverything();
+    } else if (event.key.toLowerCase() === 'f') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    }
+  });
+
+  openSlide(0);
+})();
+</script>
+</body>
+</html>
