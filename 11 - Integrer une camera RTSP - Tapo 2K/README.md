@@ -6,7 +6,7 @@ Dans ce guide complet, nous allons configurer pas à pas une caméra Tapo pour o
 
 # 📺 Vidéo
 
-Lien Youtube: [https://www.youtube.com/@Baronnix/playlists](https://www.youtube.com/@Baronnix/playlists)
+Lien Youtube: [https://www.youtube.com/watch?v=_RT7ULY_3ws](https://www.youtube.com/watch?v=_RT7ULY_3ws)
 
 # 🎯 Objectif
 
